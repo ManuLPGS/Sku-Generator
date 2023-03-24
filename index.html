@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 
 <head>
     <meta charset="UTF-8">
@@ -20,12 +20,17 @@
                     <input type="text" placeholder="Insert your Skus here..." id="input">
                     <input type="submit" value="Organize" class="btn" id="start">
                 </form>
+                <select name="" id="select">
+                    <option value="skulist">SKU List</option>
+                    <option value="carousel">Carousel</option>
+                    <option value="custom">Custom</option>
+                </select>
             </div>
         </section>
         <section class="second">
             <div class="container2">
                 <div class="output">
-                    <div id="link">https://www.gamestop.it/SearchResult/QuickSearch?listSkus=</div>
+                    <div id="link"></div>
                     <div class="result" id="result"></div>
                 </div>
                 <div class="btn-container">
@@ -41,47 +46,8 @@
             <p>Copyrigth &copy; Manuel La Porta 2021 - V1.0</p>
         </section>
     
-<script>
-    
-    let input = document.getElementById('input');
-    let output = document.getElementById('result');
-    const startBtn = document.getElementById('start');
-    const copyBtn = document.getElementById('copy');
-    const reloadBtn = document.getElementById('reload');
-    const alertBox = document.getElementById('alert');
+<script src="app.js"></script>
 
-    
-    startBtn.addEventListener('click', skuListGen);
-    copyBtn.addEventListener('click', copyAll);
-    reloadBtn.addEventListener('click', reLoad);
-    
-    function skuListGen(e){
-        let listSku = input.value.split(' ');
-        let result = listSku.toString();
-        output.textContent = result;
-        e.preventDefault();
-    }
-    
-    function copyAll() {
-        let first = document.getElementById('link').textContent;
-        let second = document.getElementById('result').textContent;
-        let full = first + second;
-        navigator.clipboard.writeText(full);
-        showAlert();
-        setTimeout(showAlert,1500);
-    }
-
-    function reLoad() {
-        output.textContent ='';
-        input.value='';
-    }
-
-    function showAlert(){
-      alertBox.classList.toggle("active");
-    }
-
-
-</script>
 </body>
 
 </html>

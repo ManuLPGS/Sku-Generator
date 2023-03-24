@@ -69,7 +69,7 @@ i{
 }
 .second{
     background-color: #ffff;
-    margin: 3em auto 1em auto;
+    margin: 5em auto 1em auto;
     padding: 0 1em;
 }
 
@@ -98,11 +98,8 @@ i{
     padding: 10px;
     width: 90%;
     margin: 0 auto;
-    margin-bottom: 10em;
-    position: absolute;
-    top: 85%;
-    right: 0;
-    left: 0;
+    margin-bottom: 1em;
+    position: relative;
 }
 
 
@@ -129,6 +126,28 @@ input[type='text'],input[type='submit']{
 input{
     width: 100%;
     padding: .5em 1em;
+}
+
+#select{
+    width: 50%;
+    margin: 0 auto;
+}
+
+#radioInput{
+    color: #333;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    width: 100%;
+    margin-bottom: 2em;
+}
+
+.radioOpt label{
+    display: flex
+}
+
+.radioOpt{
+    display: auto;
 }
 
 .container1{
