@@ -7,16 +7,20 @@ const alertBox = document.getElementById('alert');
 const select = document.getElementById('select');
 const link = document.getElementById('link');
 
-startBtn.addEventListener('click',(e) =>{
+select.addEventListener('change',(e) =>{
     const inputObj = getOptionValue();
     const option = inputObj.option;
     const entries = inputObj.entries;
     // console.log(option,entries)
     
-    link.textContent = setOutput(option,entries)
+    setOutput(option,entries)
     // link.textContent = 'e'
     e.preventDefault()
 })
+
+reLoad();
+copyBtn.addEventListener('click', copyAll )
+reloadBtn.addEventListener('click', reLoad )
 
 function getOptionValue(){
     let option = select.value;
@@ -30,27 +34,50 @@ function getOptionValue(){
 }
 
 function setOutput(option,entries){
-    switch (option) {
-        case 'skulist':
-            const result = `https://www.gamestop.it/SearchResult/QuickSearch?listSkus=${entries.toString()}`      
-            //check before retunring value
-            return result.replace(/,{2,}/g, ',');   
-            break;
-        case 'carousel':
-            let cardArray = [];
-            entries.forEach(el =>{
-                cardArray += '<div class="card" data-sku="'+ el +'"></div>';
-            })
-            //check before retunring value
-            cardArray = cardArray.replaceAll('</div><div class="card" data-sku="">','');
-            return cardArray.toLocaleString();
-            break;
-        case 'custom':
-            return 'test'            
-            break;
-        default:
-            return `https://www.gamestop.it/SearchResult/QuickSearch?listSkus=${entries.toLocaleString()}`            
-            break;
+    if (option === 'skulist'){
+        const result = `https://www.gamestop.it/SearchResult/QuickSearch?listSkus=${entries.toString()}`      
+        //check before retunring value
+        link.textContent = result;
+    }else if(option === 'carousel'){
+        let cardArray = [];
+        entries.forEach(el =>{
+            cardArray += '<div class="card" data-sku="'+ el +'"></div>';
+        })
+        //check before retunring value
+        cardArray = cardArray.replaceAll('</div><div class="card" data-sku="">','');
+        link.textContent = cardArray.toLocaleString()
+
+    }else if(option === 'custom'){
+        let cInput = `
+        <form class="customForm">
+            <div class="custom">
+                <input type="text" placeholder="First section" id="fValue"> SKU <input type="text" placeholder="Second section" id="sValue">
+            </div>  
+            <input type="submit" value="Confirm" class="btn" id="customInputBtn">
+        </form>`
+        link.innerHTML = cInput;
+
+        const confirmBtn = document.getElementById('customInputBtn');
+
+        confirmBtn.addEventListener('click', (e) =>{
+            e.preventDefault()
+            const fValue = document.getElementById('fValue').value
+            const sValue = document.getElementById('sValue').value
+            if(input.value != '' && fValue != '' && sValue != ''){
+                link.innerHTML = '';
+                let cInputArray = [];
+                entries.forEach(el =>{
+                    cInputArray += fValue + el + sValue;
+                })
+                link.textContent = cInputArray.toLocaleString()
+            }else{
+                showAlert('Please fill all the fields', 'danger');
+                setTimeout(showAlert,1500);
+            }
+
+        })
+    }else{
+        reLoad();
     }
 }
 
@@ -65,20 +92,26 @@ function disable(el,check){
 }
 
 function copyAll() {
-    let first = document.getElementById('link').textContent;
+    let first = link.textContent;
     let second = document.getElementById('result').textContent;
     let full = first + second;
     navigator.clipboard.writeText(full);
-    showAlert();
+    showAlert('Link copied in your clipboard', 'succeed');
     setTimeout(showAlert,1500);
 }
 
 function reLoad() {
     output.textContent ='';
     input.value='';
+    link.innerHTML = '';
+    link.innerHTML = 'Select a Format';
+    select.querySelector('[value = "select"]').selected = true;
 }
 
-function showAlert(){
-  alertBox.classList.toggle("active");
+function showAlert(text,property){
+    alertBox.textContent = text;
+    alertBox.classList.add(property)
+    alertBox.id = property;
+    alertBox.classList.toggle("active");
 }
 
