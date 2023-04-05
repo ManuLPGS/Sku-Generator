@@ -35,10 +35,13 @@ function getOptionValue(){
 
 function setOutput(option,entries){
     if (option === 'skulist'){
+
         const result = `https://www.gamestop.it/SearchResult/QuickSearch?listSkus=${entries.toString()}`      
         //check before retunring value
         link.textContent = result;
-    }else if(option === 'carousel'){
+
+    }else if(option === 'carousel-c'){
+
         let cardArray = [];
         entries.forEach(el =>{
             cardArray += '<div class="card" data-sku="'+ el +'"></div>';
@@ -47,7 +50,18 @@ function setOutput(option,entries){
         cardArray = cardArray.replaceAll('</div><div class="card" data-sku="">','');
         link.textContent = cardArray.toLocaleString()
 
+    }else if(option === 'carousel-s'){
+
+        let cardArray = [];
+        entries.forEach(el =>{
+            cardArray += '<div class="splide__slide" data-sku="'+ el +'"></div>';
+        })
+        //check before retunring value
+        cardArray = cardArray.replaceAll('</div><div class="card" data-sku="">','');
+        link.textContent = cardArray.toLocaleString()
+
     }else if(option === 'custom'){
+
         let cInput = `
         <form class="customForm">
             <div class="custom">
